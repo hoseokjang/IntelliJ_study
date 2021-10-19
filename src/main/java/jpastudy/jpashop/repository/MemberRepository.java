@@ -1,16 +1,17 @@
 package jpastudy.jpashop.repository;
 
 import jpastudy.jpashop.domain.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor // final을 받는 인자를 자동으로 초기화 해준다.
 public class MemberRepository {
-    @PersistenceContext // @Autowired를 써도 된다.
-    private EntityManager em;
+    // @PersistenceContext // @Autowired를 써도 된다
+    private final EntityManager em;
 
     // 등록
     public void save(Member member)
@@ -29,7 +30,7 @@ public class MemberRepository {
     }
     public List<Member> findByName(String name)
     {   // TypedQuery.파라미터 설정.return type 설정
-        return em.createQuery("select * from Member m where m.name=:name", Member.class).setParameter("name",name).getResultList();
+        return em.createQuery("select m from Member m where m.name=:name", Member.class).setParameter("name",name).getResultList();
     }
 
 }
