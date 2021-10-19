@@ -29,4 +29,21 @@ public abstract class Item {
 
     // 재고 수량
     private int stockQuantity;
+
+    // * Businese Logic *//
+    // 재고 수량 1개 증가
+    public void addStock(int quantity)
+    {
+        this.stockQuantity += quantity;
+    }
+    // 재고 수량 1개 감소
+    public void removeStock(int quantity)
+    {
+        int restStock = this.stockQuantity - quantity;
+        if (restStock < 0)
+        {
+
+        }
+        this.stockQuantity = restStock;
+    }
 }
