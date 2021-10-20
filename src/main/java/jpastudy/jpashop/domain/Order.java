@@ -53,4 +53,43 @@ public class Order {
         this.orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
+
+    // * 비즈니스 로직 *//
+    // 주문 생성 Method
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems)
+    {
+        Order order = new Order();
+        order.setMember(member); // 주문과 회원 연결
+        order.setDelivery(delivery); // 주문과 배송 연결
+        for (OrderItem orderItem: orderItems)
+        {   // 주문과 주문 상품들 연결
+            order.addOrderItem(orderItem);
+        }
+        order.setOrderStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+    // 주문 취소 Method
+    public void cancel()
+    {
+        if (this.delivery.getStatus() == DeliveryStatus.COMP)
+        {
+            throw new IllegalStateException("이미 배송 완료된 상품은 취소가 불가능합니다.");
+        }
+        this.setOrderStatus(OrderStatus.CANCLE);
+        for (OrderItem orderItem: orderItems)
+        {
+            orderItem.cancel(); // cancel에 item 수량 증가도 들어가 있음
+        }
+    }
+    // 전체 가격 조회
+    public int getTotalPrice()
+    {
+        int totalPrice = 0;
+        for(OrderItem orderItem: orderItems)
+        {
+            totalPrice += orderItem.getTotalPrice();
+        }
+        return totalPrice;
+    }
 }

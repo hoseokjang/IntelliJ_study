@@ -29,4 +29,26 @@ public class OrderItem {
 
     // 주문수량
     private int count;
+
+    // * 비지니스 로직 * //
+    // 생성 Method
+    public static OrderItem createOrderItem(Item item, int count, int orderPrice)
+    {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+        item.removeStock(count); // 주문을 생성했으니 상품의 수량 감소
+        return orderItem;
+    }
+    // 주문 취소 Method
+    public void cancel()
+    {
+        item.addStock(this.count);
+    }
+    // 주문 상품 전체 가격 조회
+    public int getTotalPrice()
+    {
+        return this.getOrderPrice() * this.getCount();
+    }
 }
