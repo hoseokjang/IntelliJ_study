@@ -1,9 +1,6 @@
 package jpastudy.jpashop.service;
 
-import jpastudy.jpashop.domain.Address;
-import jpastudy.jpashop.domain.Member;
-import jpastudy.jpashop.domain.Order;
-import jpastudy.jpashop.domain.OrderStatus;
+import jpastudy.jpashop.domain.*;
 import jpastudy.jpashop.domain.item.Book;
 import jpastudy.jpashop.domain.item.Item;
 import jpastudy.jpashop.exception.NotEnoughStockException;
@@ -16,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import java.util.List;
 
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
@@ -80,9 +79,28 @@ class OrderServiceTest {
         assertEquals("주문이 취소된 상품은 그만큼 재고가 증가해야 한다.", 10,
                 item.getStockQuantity());
     }
+    @Test
+    public void 주문검색() throws Exception
+    {
+        // 주문 정보는 위에 상품 주문에서 가져옴
+        Member member = createMember("몽타", new Address("서울시","동작구","12345"));
+        Item item = createBook("스프링 부트",10000,10);
+        int orderCount = 2;
+
+        Long orderId = orderService.order(member.getId(), item.getId(), orderCount);
+
+        // 검색
+        OrderSearch orderSearch = new OrderSearch();
+//        orderSearch.setMemberName(member.getName());
+        orderSearch.setMemberName("몽");
+        orderSearch.setOrderStatus(OrderStatus.ORDER); // 주문 상태를 CANCEL로 하면 TEST FAIL이 나온다.(expect가 1이기 때문에)
+        // 이름으로 검색
+        List<Order> orders = orderService.findOrders(orderSearch);
+        assertEquals("검색된 Order 개수.",1,orders.size());
+    }
     private Member createMember(String name, Address address) {
         Member member = new Member();
-        member.setName("회원1");
+        member.setName("몽타");
         member.setAddress(new Address("서울", "강동", "123-123"));
         em.persist(member);
         return member;
