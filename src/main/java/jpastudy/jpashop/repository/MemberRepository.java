@@ -27,7 +27,7 @@ public class MemberRepository {
     // 전체 조회
     public List<Member> findAll()
     {   // TypedQuery.return type 설정
-        return em.createQuery("select * from Member m", Member.class).getResultList();
+        return em.createQuery("select m from Member m", Member.class).getResultList();
     }
     public List<Member> findByName(String name)
     {   // TypedQuery.파라미터 설정.return type 설정
