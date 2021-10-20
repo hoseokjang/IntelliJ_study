@@ -44,7 +44,7 @@ public class OrderItem {
     // 주문 취소 Method
     public void cancel()
     {
-        item.addStock(this.count);
+        item.addStock(this.count); // 주문을 취소했으니 다시 Item 수량 증가
     }
     // 주문 상품 전체 가격 조회
     public int getTotalPrice()
