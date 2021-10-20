@@ -14,6 +14,7 @@ public class MemberRepository {
     private final EntityManager em;
 
     // 등록
+    // @Transactional(propagation = Propagation.REQUIRED)
     public void save(Member member)
     {
         em.persist(member);

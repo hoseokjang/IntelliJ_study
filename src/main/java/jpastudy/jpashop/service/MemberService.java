@@ -23,7 +23,7 @@ public class MemberService {
         }
     }
     // 회원가입
-    @Transactional
+    // @Transactional(propagation = Propagation.REQUIRED)
     public Long join(Member member) {
         validateDuplicateMember(member); //중복 회원 검증
         memberRepository.save(member);
