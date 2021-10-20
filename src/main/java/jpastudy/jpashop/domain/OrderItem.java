@@ -32,7 +32,7 @@ public class OrderItem {
 
     // * 비지니스 로직 * //
     // 생성 Method
-    public static OrderItem createOrderItem(Item item, int count, int orderPrice)
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count)
     {
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(item);
@@ -49,6 +49,6 @@ public class OrderItem {
     // 주문 상품 전체 가격 조회
     public int getTotalPrice()
     {
-        return this.getOrderPrice() * this.getCount();
+        return getOrderPrice() * getCount();
     }
 }
