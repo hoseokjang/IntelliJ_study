@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+    <h1>Home</h1>
+    <div th:replace="fragments/myfragment :: part1"></div>
+    <!-- replace는 div 자리에 만들어 놓은 part1 div가 대신함 -->
+    <hr>
+    <div th:insert="fragments/myfragment :: part2"></div>
+    <!-- insert를 하면 div안에 만들어 놓은 part2 div가 하나 더 들어감 -->
+    <hr>
+    <th:block th:replace="fragments/myfragment :: part3"></th:block>
+    <!-- block을 써도 replace와 같은 역할 -->
+</body>
+</html>
