@@ -1,4 +1,4 @@
-package jpabook.jpashop.web.error;
+package jpastudy.jpashop.web.error;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
