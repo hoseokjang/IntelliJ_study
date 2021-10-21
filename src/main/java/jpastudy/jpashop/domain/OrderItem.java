@@ -1,5 +1,6 @@
 package jpastudy.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jpastudy.jpashop.domain.item.Item;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class OrderItem {
     private Long id;
 
     // Order와 N:1 관계
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Order order;

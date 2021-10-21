@@ -43,8 +43,8 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa'
 	//querydsl 추가
 	implementation 'com.querydsl:querydsl-apt'
-
-
+	// Hibernate5Module 라이브러리 설치 및 Bean 등록
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
 }
 
 test {
