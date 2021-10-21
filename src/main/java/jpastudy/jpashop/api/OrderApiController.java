@@ -82,5 +82,16 @@ public class OrderApiController {
                     .collect(toList()); // List<OrderItemDto>
         }
     }
-
+    /*
+        v3 : fetch join 최적화
+        문제점 : *ToMany 의존관계 객체들의 페이징 처리가 불가
+     */
+    @GetMapping("/api/v3/orders")
+    public List<OrderDto> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithItem();
+        List<OrderDto> result = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(toList());
+        return result;
+    }
 }
