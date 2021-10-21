@@ -13,6 +13,7 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name="member_id")
     private Long id;
 
+    // @NotEmpty // -> 검증을 위한 어노테이션은 사용하지 않아야 함
     private String name;
 
     @Embedded
