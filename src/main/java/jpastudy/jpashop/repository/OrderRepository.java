@@ -38,7 +38,10 @@ public class OrderRepository {
                 .limit(1000)
                 .fetch();
     }
-
+    public List<Order> findAllWithMemberDelivery()
+    {
+        return em.createQuery("select o from Order o join fetch o.member m join fetch o.delivery d", Order.class).getResultList();
+    }
     private BooleanExpression statusEq(OrderStatus orderStatus) {
         if(orderStatus == null) {
             return null;
