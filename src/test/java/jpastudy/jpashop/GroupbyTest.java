@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
@@ -33,12 +34,24 @@ public class GroupbyTest {
         System.out.println("합계 : " + totalCalory);
         IntSummaryStatistics statistics = dishList.stream().collect(Collectors.summarizingInt(Dish::getCalory));
         System.out.println("통계 : " + statistics);
+        System.out.println("==============================");
+        // Dish의 Type별로 Grouping하기
+        Map<Type, List<Dish>> dishsByType = dishList.stream().collect(Collectors.groupingBy(Dish::getType));
+        System.out.println("Type Grouping : " + dishsByType);
     }
 
     static class Dish
     {
         String name;
         int calory;
+
+        @Override
+        public String toString() {
+            return "Dish{" +
+                    "name='" + name + '\'' +
+                    '}';
+        }
+
         Type type;
         // alt + insert -> constructor로 생성자 만듬
         public Dish(String name, int calory, Type type) {
