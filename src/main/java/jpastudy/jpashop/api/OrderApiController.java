@@ -116,7 +116,7 @@ public class OrderApiController {
         return orderDtoList; // ctrl + alt + v로 변수로 생성 가능
     }
     /*
-
+     * V4 : 쿼리를 수행할 때 Dto를 저장했기 때문에 그대로 사용하면 된다. (return Type도 Dto로 받으면된다)
      */
     @GetMapping("/api/v4/orders")
     public List<OrderQueryDto> ordersV4() {
