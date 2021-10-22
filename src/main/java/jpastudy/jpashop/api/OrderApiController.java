@@ -2,6 +2,8 @@ package jpastudy.jpashop.api;
 
 import jpastudy.jpashop.domain.*;
 import jpastudy.jpashop.repository.OrderRepository;
+import jpastudy.jpashop.repository.order.query.OrderQueryDto;
+import jpastudy.jpashop.repository.order.query.OrderQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class OrderApiController {
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
 
     /*
         v1 : Entity를 API에 직접 노출하는 방식
@@ -111,5 +114,12 @@ public class OrderApiController {
                 .map(order -> new OrderDto(order)) // Stream<OrderDto>
                 .collect(toList()); // List<OrderDto>
         return orderDtoList; // ctrl + alt + v로 변수로 생성 가능
+    }
+    /*
+
+     */
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDto> ordersV4() {
+        return orderQueryRepository.findOrderQueryDtos();
     }
 }

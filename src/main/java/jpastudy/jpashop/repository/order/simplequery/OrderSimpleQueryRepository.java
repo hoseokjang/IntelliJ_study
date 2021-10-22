@@ -10,6 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderSimpleQueryRepository {
     private final EntityManager em;
+
     public List<OrderSimpleQueryDto> findOrderDtos() {
         return em.createQuery(
                         "select new jpastudy.jpashop.repository.order.simplequery.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.orderStatus, d.address)" +
@@ -18,4 +19,5 @@ public class OrderSimpleQueryRepository {
                                 " join o.delivery d", OrderSimpleQueryDto.class)
                 .getResultList();
     }
+
 }
