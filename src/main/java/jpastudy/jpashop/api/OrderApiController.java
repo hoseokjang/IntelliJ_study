@@ -120,6 +120,19 @@ public class OrderApiController {
      */
     @GetMapping("/api/v4/orders")
     public List<OrderQueryDto> ordersV4() {
-        return orderQueryRepository.findOrderQueryDtos();
+        return orderQueryRepository.findOrdersQueryDtos();
+    }
+    /*
+     * V5 : 쿼리를 수행할 때 Dto를 저장했기 때문에 그대로 사용하면 된다
+     * 쿼리 횟수를 줄이기 위해 스트림의 Groupby 기능 사용한 메소드 호출
+     */
+    @GetMapping("/api/v5/orders")
+    public  List<OrderQueryDto> orderV5()
+    {
+        return orderQueryRepository.findOrdersQueryDtos_optimize_before();
+    }
+    @GetMapping("/api/v5_1/orders")
+    public List<OrderQueryDto> ordersV5_1() {
+        return orderQueryRepository.findOrdersQueryDtos_optimize_after();
     }
 }
