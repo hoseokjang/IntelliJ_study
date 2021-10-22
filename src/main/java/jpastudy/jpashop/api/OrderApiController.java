@@ -99,7 +99,8 @@ public class OrderApiController {
     }
     /*
         v3.1 : fetch join의 페이징 처리 문제 해결
-        batch_fetch_size를 정해줘서 데이터 개수를 몇 개 가져올지 정해줌 (100~1000을 권장
+        batch_fetch_size를 정해줘서 데이터 개수를 몇 개 가져올지 정해줌 (100~1000을 권장)
+        // version3에서는 쿼리가 7번 날아갔지만 version3.1에서는 쿼리가 3번만 날아감
      */
     @GetMapping("/api/v3_1/orders")
     public List<OrderDto> orderV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
