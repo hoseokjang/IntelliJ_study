@@ -5,6 +5,7 @@ import jpastudy.jpashop.repository.OrderRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -63,6 +64,7 @@ public class OrderApiController {
             count = orderItem.getCount();
         }
     }
+    // order 결과를 담아놓은 DTO
     @Data
     static class OrderDto {
         private Long orderId;
@@ -89,9 +91,24 @@ public class OrderApiController {
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
         List<Order> orders = orderRepository.findAllWithItem();
+        orders.forEach(order -> System.out.println(order));
         List<OrderDto> result = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(toList());
         return result;
+    }
+    /*
+        v3.1 : fetch join의 페이징 처리 문제 해결
+        batch_fetch_size를 정해줘서 데이터 개수를 몇 개 가져올지 정해줌 (100~1000을 권장
+     */
+    @GetMapping("/api/v3_1/orders")
+    public List<OrderDto> orderV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                       @RequestParam(value = "limit", defaultValue = "100") int limit)
+    {
+        List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
+        List<OrderDto> orderDtoList = orders.stream() // Stream<Order>
+                .map(order -> new OrderDto(order)) // Stream<OrderDto>
+                .collect(toList()); // List<OrderDto>
+        return orderDtoList; // ctrl + alt + v로 변수로 생성 가능
     }
 }

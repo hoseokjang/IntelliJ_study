@@ -49,7 +49,7 @@ public class OrderRepository {
                 .getResultList();
     }
     // (OrderSimpleApiController)
-    public List<Order> findAllWithMemberDelivery()
+    public List<Order> findAllSimpleWithMemberDelivery()
     {
         return em.createQuery("select o from Order o join fetch o.member m join fetch o.delivery d", Order.class).getResultList();
     }
@@ -58,6 +58,14 @@ public class OrderRepository {
             return null;
         }
         return QOrder.order.orderStatus.eq(orderStatus);
+    }
+    // ToMany 관계인 Entity를 페이징 처리 하기 (OrderApiController)
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+                        "select o from Order o join fetch o.member m join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
     }
     private BooleanExpression namelike(String memberName) {
         if(!StringUtils.hasText(memberName)) // StringUtils는 springframework에 있는 package를 사용
